@@ -1,0 +1,87 @@
+{
+	"Name": "ULC + LVC Stream Deck",
+	"Version": "0.2.0.0",
+	"Author": "sratzel.dev",
+	"Actions": [
+		{
+			"Name": "ULC Controls",
+			"UUID": "dev.sratzel.ulc-streamdeck-plugin.ulcfolder",
+			"Icon": "imgs/plugin/category-icon",
+			"Tooltip": "Main ULC control panel",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "imgs/plugin/category-icon",
+					"TitleAlignment": "middle",
+					"Title": "ULC"
+				}
+			]
+		},
+		{
+			"Name": "ULC Button",
+			"UUID": "dev.sratzel.ulc-streamdeck-plugin.ulcbutton",
+			"Icon": "imgs/plugin/category-icon",
+			"Tooltip": "Drag multiple - auto-assigns to ULC stages by position",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "imgs/plugin/category-icon",
+					"TitleAlignment": "middle",
+					"Title": "ULC"
+				}
+			]
+		},
+		{
+			"Name": "LVC Lights Toggle",
+			"UUID": "dev.sratzel.ulc-streamdeck-plugin.lvcsiren",
+			"Icon": "imgs/plugin/category-icon",
+			"Tooltip": "Toggle emergency lights (master switch) on/off",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "imgs/plugin/category-icon",
+					"TitleAlignment": "middle",
+					"Title": "LIGHTS"
+				}
+			]
+		},
+		{
+			"Name": "LVC Tone Button",
+			"UUID": "dev.sratzel.ulc-streamdeck-plugin.lvctone",
+			"Icon": "imgs/plugin/category-icon",
+			"Tooltip": "Single-click: Set as main siren. Double-click: Toggle as dual/aux siren",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "imgs/plugin/category-icon",
+					"TitleAlignment": "middle",
+					"Title": "TONE"
+				}
+			]
+		}
+	],
+	"Category": "Emergency Controls",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "Control FiveM ULC (Ultimate Lighting Controller) and LVC (Luxart Vehicle Control) from your Stream Deck!",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "6.9"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "dev.sratzel.ulc-streamdeck-plugin"
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ULC Button Settings</title>
+    <link rel="stylesheet" href="https://sdpi-components.dev/releases/v3/sdpi-components.css" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #2D2D2D;
+            color: #FFFFFF;
+            padding: 12px;
+            margin: 0;
+        }
+        .sdpi-wrapper {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 12px;
+            color: #9B9B9B;
+        }
+        input, select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #3D3D3D;
+            border-radius: 4px;
+            background-color: #3D3D3D;
+            color: #FFFFFF;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #0078D7;
+        }
+        .info-text {
+            font-size: 11px;
+            color: #7A7A7A;
+            margin-top: 4px;
+        }
+        h2 {
+            font-size: 14px;
+            margin: 0 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3D3D3D;
+        }
+    </style>
+</head>
+<body>
+<h2>ULC Button Configuration</h2>
+
+<div class="sdpi-wrapper">
+    <label for="extraId">ULC Extra ID</label>
+    <input type="text" id="extraId" placeholder="e.g., extra_1" />
+    <div class="info-text">Enter the ULC extra ID (e.g., extra_1, extra_2)</div>
+</div>
+
+<div class="sdpi-wrapper">
+    <label for="label">Button Label (optional)</label>
+    <input type="text" id="label" placeholder="e.g., Stage 1" />
+    <div class="info-text">Custom label when ULC is not connected</div>
+</div>
+
+<script>
+    let websocket = null
+    let pluginUUID = null
+    let actionInfo = null
+    let settings = {}
+
+    function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, inInfo, inActionInfo) {
+        pluginUUID = inPluginUUID
+        actionInfo = JSON.parse(inActionInfo)
+        settings = actionInfo.payload.settings || {}
+
+        document.getElementById("extraId").value = settings.extraId || ""
+        document.getElementById("label").value = settings.label || ""
+
+        websocket = new WebSocket("ws://127.0.0.1:" + inPort)
+
+        websocket.onopen = function() {
+            websocket.send(JSON.stringify({
+                event: inRegisterEvent,
+                uuid: pluginUUID
+            }))
+        }
+
+        websocket.onmessage = function(evt) {
+            const data = JSON.parse(evt.data)
+            if (data.event === "didReceiveSettings") {
+                settings = data.payload.settings || {}
+                document.getElementById("extraId").value = settings.extraId || ""
+                document.getElementById("label").value = settings.label || ""
+            }
+        }
+    }
+
+    function saveSettings() {
+        settings.extraId = document.getElementById("extraId").value.trim()
+        settings.label = document.getElementById("label").value.trim()
+
+        if (websocket && websocket.readyState === WebSocket.OPEN) {
+            websocket.send(JSON.stringify({
+                event: "setSettings",
+                context: actionInfo.context,
+                payload: settings
+            }))
+        }
+    }
+
+    document.getElementById("extraId").addEventListener("change", saveSettings)
+    document.getElementById("label").addEventListener("change", saveSettings)
+    document.getElementById("extraId").addEventListener("input", saveSettings)
+    document.getElementById("label").addEventListener("input", saveSettings)
+</script>
+</body>
+</html>
