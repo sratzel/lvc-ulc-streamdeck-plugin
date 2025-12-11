@@ -2,6 +2,10 @@
 
 > ⚠️ **WORK IN PROGRESS** - This plugin is currently under development.
 
+
+![ULC Preview](.github/ulc_preview.gif)
+<sup><sub>In this preview the LVC integration was not working properly</sub></sup>
+
 Elgato Stream Deck plugin for controlling [ULC (Ultimate Lighting Controller)](https://github.com/Flohhhhh/ultimate-lighting-controller) and [LVC (Luxart Vehicle Control)](https://github.com/TrevorBarns/luxart-vehicle-control) in FiveM.
 
 ## Features
